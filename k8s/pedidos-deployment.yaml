@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pedidos-deployment
+  labels:
+    app: pedidos-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pedidos-deployment
+  template:
+    metadata:
+      labels:
+        app: pedidos-deployment
+    spec:
+      containers:
+        - name: app
+          image: wellalencar/app-fast-food-pedidos:latest
+          command: ["sh", "-c", "npm run start"]
+          ports:
+            - containerPort: 6004
+          resources:
+            requests:
+              cpu: 333m
+            limits:
+              cpu: 999m
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: NODE_ENV
+            - name: MONGODB_CONN_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: MONGODB_CONN_STRING
+            - name: MONGODB_DB
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: MONGODB_DB                  
+            - name: CLIENTE_SERVICE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: CLIENTE_SERVICE_URL
+            - name: PRODUTO_SERVICE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: PRODUTO_SERVICE_URL           
+            - name: SQS_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: SQS_REGION           
+            - name: SQS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: SQS_ACCESS_KEY_ID           
+            - name: SQS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: SQS_SECRET_ACCESS_KEY           
+            - name: SQS_POLLING_WAIT_TIME
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: SQS_POLLING_WAIT_TIME           
+            - name: QUEUE_CONFIRMACAO_PAGAMENTO
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: QUEUE_CONFIRMACAO_PAGAMENTO           
+            - name: QUEUE_NOTIFICAO_CLIENTE
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: QUEUE_NOTIFICAO_CLIENTE           
+            - name: QUEUE_ANONIMIZACAO_CLIENTE
+              valueFrom:
+                secretKeyRef:
+                  name: secret-pedidos
+                  key: QUEUE_ANONIMIZACAO_CLIENTE           

@@ -1,2 +1,2 @@
-# k8s-pedidos-infra
-Gerenciar os recursos de Kubernetes específicos para o serviço de pedidos.
+# infra-k8s-resources (Pedidos)
+Repositório para administrar os recursos Kubernetes do projeto Tech Challenge.
